@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TechTracker - Resultados de búsqueda</title>
+  <link rel="stylesheet" type="text/css" href="../static/home_style.css">
+</head>
+<body>
+<main>
+  <h1>TechTracker - Resultados de búsqueda</h1>
+  
+  {% if results %}
+    <table>
+      <tr>
+        <th>Marca</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>URL</th>
+      </tr>
+      
+      {% for product in results[:10] %} 
+        <tr>
+          <td>{{ product.brand }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.quantity }} {{ product.measure }}</td>
+          <td><a href="{{ product.url }}">Enlace a pantalla de compra</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No se encontraron resultados.</p>
+  {% endif %}
+  
+  <a class="submit" href="{{ url_for('hello_world') }}">Volver al buscador</a>
+</main>
+</body>
+</html>

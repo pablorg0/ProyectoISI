@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TechTracker</title>
+  <link rel="stylesheet" type="text/css" href="../static/home_style.css">
+</head>
+<body>
+  <main>
+    <h1>TechTracker - Comparación de productos electronicos</h1>
+    <form method="POST" action="{{ url_for('results') }}">
+      <input type="text" name="query" placeholder="Buscar productos...">
+      <input type="submit" value="Buscar">
+    </form>
+  </main>
+</body>
+</html>
