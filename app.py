@@ -4,8 +4,7 @@ app = Flask(__name__)
 
 def sort_products(products):
     def sort_key(product):
-        quantity = product['quantity'] 
-        ratio = product['price'] / quantity
+        ratio = product['price']
         return ratio
     
     products.sort(key=sort_key)
