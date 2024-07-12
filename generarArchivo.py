@@ -28,8 +28,8 @@ with open('productsAliexpress.txt', 'w') as f:
         f.write(f'{id} \\ {name} \\ {price} \\ {url} \\ {img_url}\n')
 
 #Para FakeStoreAPI
-queryAmazon = "SELECT * FROM electronics"
-cursor.execute(queryAmazon)
+queryAPI = "SELECT * FROM electronics"
+cursor.execute(queryAPI)
 
 with open('productsAPI.txt', 'w') as f:
     for (id, name, brand, price, quantity, measure, url) in cursor:
