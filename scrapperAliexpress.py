@@ -51,7 +51,7 @@ def scrape_page(url):
 
 # Scrapeando las páginas permitidas
 base_url = 'https://es.aliexpress.com/w/wholesale-Tel%C3%A9fonos-inteligentes-resistentes.html?isFromCategory=y&categoryUrlParams=%7B%22q%22%3A%22Tel%C3%A9fonos+inteligentes+resistentes%22%2C%22s%22%3A%22qp_nw%22%2C%22osf%22%3A%22categoryNagivateOld%22%2C%22sg_search_params%22%3A%22%22%2C%22guide_trace%22%3A%22dd2a3b13-ec9a-4b14-9347-c4110f190efc%22%2C%22scene_id%22%3A%2230630%22%2C%22searchBizScene%22%3A%22openSearch%22%2C%22recog_lang%22%3A%22es%22%2C%22bizScene%22%3A%22categoryNagivateOld%22%2C%22guideModule%22%3A%22unknown%22%2C%22postCatIds%22%3A%22509%22%2C%22scene%22%3A%22category_navigate%22%7D&g=y&SearchText=Tel%C3%A9fonos+inteligentes+resistentes&_pgn={}'
-for page in range(1, 11):  # De la página 1 a la 10
+for page in range(2, 11):  # De la página 1 a la 10
     url = base_url.format(page)
     scrape_page(url)
 
