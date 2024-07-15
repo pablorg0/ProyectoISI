@@ -1,66 +1,64 @@
 import requests
 import re
 import config
-import mysql.connector
+import psycopg2
+from psycopg2 import sql, Error
 
 # DB setup
-db = mysql.connector.connect(**config.db_config)
-cursor = db.cursor()
-
-# Función para crear la tabla si no existe
-def create_table(cursor):
-    create_table_query = """
-    CREATE TABLE IF NOT EXISTS electronics (
-        id INT PRIMARY KEY,
-        name VARCHAR(255),
-        price DECIMAL(10, 2),
-        description TEXT,
-        category VARCHAR(255),
-        image TEXT,
-        url VARCHAR(255)
-    )
-    """
-    cursor.execute(create_table_query)
-
-# Función para insertar productos en la tabla
-def insert_product(cursor, product):
-    insert_query = """
-    INSERT INTO electronics (id, name, price, description, category, image, url)
-    VALUES (%s, %s, %s, %s, %s, %s, %s)
-    ON DUPLICATE KEY UPDATE
-        name = VALUES(name),
-        price = VALUES(price),
-        description = VALUES(description),
-        category = VALUES(category),
-        image = VALUES(image),
-        url = VALUES(url)
-    """
-    product_data = (
-        product['id'],
-        product['tittle'],
-        product['price'],
-        product['description'],
-        product['category'],
-        product['image'],
-        product['url']
-    )
-    cursor.execute(insert_query, product_data)
-
-# URL de la API de Fakestoreapi para la categoría "electronics"
-url = "https://fakestoreapi.com/products/category/electronics"
-
 try:
-    # Hacer una solicitud GET a la API
-    response = requests.get(url)
-    response.raise_for_status()
+    connection = psycopg2.connect(**config.db_config)
+    cursor = connection.cursor()
 
-    # Obtener los datos en formato JSON
-    electronics_products = response.json()
+    # Función para crear la tabla si no existe
+    def create_table(cursor):
+        create_table_query = """
+        CREATE TABLE IF NOT EXISTS electronics (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255),
+            price DECIMAL(10, 2),
+            description TEXT,
+            category VARCHAR(255),
+            image TEXT,
+            url VARCHAR(255)
+        )
+        """
+        cursor.execute(create_table_query)
 
-    # Conectar a la base de datos
-    connection = mysql.connector.connect(**db_config)
-    if connection.is_connected():
-        cursor = connection.cursor()
+    # Función para insertar productos en la tabla
+    def insert_product(cursor, product):
+        insert_query = """
+        INSERT INTO electronics (id, name, price, description, category, image, url)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        ON CONFLICT (id) DO UPDATE SET
+            name = EXCLUDED.name,
+            price = EXCLUDED.price,
+            description = EXCLUDED.description,
+            category = EXCLUDED.category,
+            image = EXCLUDED.image,
+            url = EXCLUDED.url
+        """
+        product_data = (
+            product['id'],
+            product['title'],
+            product['price'],
+            product['description'],
+            product['category'],
+            product['image'],
+            product['url']
+        )
+        cursor.execute(insert_query, product_data)
+
+    # URL de la API de Fakestoreapi para la categoría "electronics"
+    url = "https://fakestoreapi.com/products/category/electronics"
+
+    try:
+        # Hacer una solicitud GET a la API
+        response = requests.get(url)
+        response.raise_for_status()
+
+        # Obtener los datos en formato JSON
+        electronics_products = response.json()
+
         # Crear la tabla si no existe
         create_table(cursor)
         
@@ -73,16 +71,20 @@ try:
         connection.commit()
         print("Datos insertados correctamente en la tabla 'electronics'.")
 
-except requests.exceptions.HTTPError as http_err:
-    print(f"HTTP error occurred: {http_err}")
-except Error as db_err:
-    print(f"Database error occurred: {db_err}")
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except Error as db_err:
+        print(f"Database error occurred: {db_err}")
+    except Exception as err:
+        print(f"An error occurred: {err}")
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+            print("Conexión cerrada.")
 except Exception as err:
-    print(f"An error occurred: {err}")
-finally:
-    if 'connection' in locals() and connection.is_connected():
-        cursor.close()
-        connection.close()
+    print(f"Failed to connect to the database: {err}")
+
 
 
 
