@@ -9,7 +9,7 @@ db = mysql.connector.connect(**config.db_config)
 cursor = db.cursor()
 
 # Crear la tabla si no existe
-cursor.execute("DROP TABLE IF EXISTS resistant_smartphones CASCADE;")
+cursor.execute("DROP TABLE IF EXISTS resistant_smartphones;")
 cursor.execute("""
     CREATE TABLE resistant_smartphones (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,29 +23,40 @@ cursor.execute("""
 # Función para scrapeear una página
 def scrape_page(url):
     response = requests.get(url)
+    if response.status_code != 200:
+        print(f"Error: Unable to fetch page {url}")
+        return
+
     soup = BeautifulSoup(response.content, 'html.parser')
     
     products = soup.find_all('div', class_='JIIxO')
     for product in products:
         name_tag = product.find('a', class_='_3t7zg _2f4Ho')
-        if name_tag:
-            name = name_tag.text.strip()
-            link = 'https:' + name_tag['href']
-            
-            price_tag = product.find('div', class_='mGXnE _37W_B')
-            if price_tag:
-                price = price_tag.text.strip().replace('€', '').replace(',', '.')
-                price = float(re.search(r'\d+(\.\d+)?', price).group())
+        if not name_tag:
+            continue
 
-            img_tag = product.find('img', class_='JMIpe _2vWXo')
-            if img_tag:
-                img_url = 'https:' + img_tag['src']
-            
-            # Insertar en la base de datos
-            cursor.execute("""
-                INSERT INTO resistant_smartphones (name, price, url, img_url)
-                VALUES (%s, %s, %s, %s)
-            """, (name, price, link, img_url))
+        name = name_tag.text.strip()
+        link = 'https:' + name_tag['href']
+        
+        price_tag = product.find('div', class_='mGXnE _37W_B')
+        if price_tag:
+            price_text = price_tag.text.strip().replace('€', '').replace(',', '.')
+            price_match = re.search(r'\d+(\.\d+)?', price_text)
+            if price_match:
+                price = float(price_match.group())
+            else:
+                price = None
+        else:
+            price = None
+
+        img_tag = product.find('img', class_='JMIpe _2vWXo')
+        img_url = 'https:' + img_tag['src'] if img_tag else None
+        
+        # Insertar en la base de datos
+        cursor.execute("""
+            INSERT INTO resistant_smartphones (name, price, url, img_url)
+            VALUES (%s, %s, %s, %s)
+        """, (name, price, link, img_url))
 
     db.commit()
 
@@ -58,3 +69,4 @@ for page in range(2, 11):  # De la página 1 a la 10
 # Cerrar la conexión a la base de datos
 cursor.close()
 db.close()
+
