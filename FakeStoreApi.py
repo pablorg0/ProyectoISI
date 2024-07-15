@@ -9,7 +9,7 @@ try:
     connection = psycopg2.connect(**config.db_config)
     cursor = connection.cursor()
 
-    # Función para crear la tabla si no existe
+    #Función para crear la tabla si no existe
     def create_table(cursor):
         create_table_query = """
         CREATE TABLE IF NOT EXISTS electronics (
