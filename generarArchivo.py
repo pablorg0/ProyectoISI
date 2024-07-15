@@ -32,8 +32,8 @@ queryAPI = "SELECT * FROM electronics"
 cursor.execute(queryAPI)
 
 with open('productsAPI.txt', 'w') as f:
-    for (id, name, price, description, category, image) in cursor:
-        f.write(f'{id} \\ {name} \\ {price} \\ {description} \\ {category} \\ {image}\n')
+    for (id, name, price, description, category, image, url) in cursor:
+        f.write(f'{id} \\ {name} \\ {price} \\ {description} \\ {category} \\ {image} \\ {url}\n')
 
 cursor.close()
 cnx.close()
