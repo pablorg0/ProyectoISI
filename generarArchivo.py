@@ -4,7 +4,9 @@ config = {
     'host': 'proyectoisiv2-server.postgres.database.azure.com',
     'user': 'uimpsotsiy',
     'password': '8uoyerOVvg9$x2Ru',
-    'database': 'proyectoisiv2-database'
+    'database': 'proyectoisiv2-database',
+    'port': 5432,
+    'sslmode': 'require'
 }
 
 # Inicia la conexión
