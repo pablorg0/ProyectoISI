@@ -12,19 +12,15 @@
   {% if results %}
     <table>
       <tr>
-        <th>Marca</th>
         <th>Nombre</th>
         <th>Precio</th>
-        <th>Cantidad</th>
         <th>URL</th>
       </tr>
       
       {% for product in results[:10] %} 
         <tr>
-          <td>{{ product.brand }}</td>
           <td>{{ product.name }}</td>
           <td>{{ product.price }}</td>
-          <td>{{ product.quantity }} {{ product.measure }}</td>
           <td><a href="{{ product.url }}">Enlace a pantalla de compra</a></td>
         </tr>
       {% endfor %}
