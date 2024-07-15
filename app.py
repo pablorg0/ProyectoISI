@@ -42,6 +42,29 @@ def read_file(file_name):
 
     return products
 
+def read_api(file_name):
+    products = []
+    if not os.path.exists(file_name):
+        return products
+
+    with open(file_name, 'r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+            columns = line.strip().split('\\')
+            product = {
+                'id': int(columns[0]),
+                'title': columns[1],
+                'price': float(columns[2]),
+                'description': columns[3],
+                'category': columns[4],
+                'image': columns[5]
+            }
+            products.append(product)
+
+    return products
+
+
 def consulta(products, query):
     results = []
 
@@ -72,7 +95,7 @@ def execute_query(query):
     productsWalmart = read_file('productsWalmart.txt')
     resultsWalmart = consulta(productsWalmart, query)
 
-    productsAPI = read_file('productsAPI.txt')
+    productsAPI = read_api('productsAPI.txt')
     resultsAPI = consulta(productsAPI, query)
 
     # Combinar los resultados en una lista
