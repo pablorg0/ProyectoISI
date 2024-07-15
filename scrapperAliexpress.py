@@ -21,7 +21,7 @@ try:
         );
     """)
 
-    # Función para scrapeear una página
+    # Función para scrapear una página
     def scrape_page(url):
         response = requests.get(url)
         if response.status_code != 200:
