@@ -1,4 +1,4 @@
-import mysql.connector
+import psycopg2
 
 config = {
     'host': 'proyectoisiv2-server.postgres.database.azure.com',
@@ -10,7 +10,7 @@ config = {
 }
 
 # Inicia la conexión
-cnx = mysql.connector.connect(**config)
+cnx = psycopg2.connect(**config)
 cursor = cnx.cursor()
 
 #Para productsWalmart
