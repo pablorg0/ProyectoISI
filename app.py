@@ -78,11 +78,9 @@ def hello_world():
     run_script('scrapperAliexpress.py')
     run_script('scrapperWalmart.py')
     run_script('FakeStoreApi.py')
-    
+    run_script('generarArchivo.py')
     return render_template('index.html')
     
-    
-    run_script('generarArchivo.py')
 
 @app.route('/results', methods=['POST'])
 def results():
