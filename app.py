@@ -2,19 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-def run_script(script_name):
-    """Ejecuta un script de Python."""
-    result = subprocess.run(['python3', script_name], capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Error ejecutando {script_name}: {result.stderr}")
-    else:
-        print(f"{script_name} ejecutado con éxito")
+#d#ef run_script(script_name):
+    #"""Ejecuta un script de Python."""
+    #result = subprocess.run(['python3', script_name], capture_output=True, text=True)
+    #if result.returncode != 0:
+     #   print(f"Error ejecutando {script_name}: {result.stderr}")
+    #else:
+     #   print(f"{script_name} ejecutado con éxito")
 
 # Ejecutar scripts de scraping y generación de archivos
-run_script('scrapperAliexpress.py')
-run_script('scrapperWalmart.py')
-run_script('FakeStoreApi.py')
-run_script('generarArchivo.py')
+#run_script('scrapperAliexpress.py')
+#run_script('scrapperWalmart.py')
+#run_script('FakeStoreApi.py')
+#run_script('generarArchivo.py')
 
 def sort_products(products):
     def sort_key(product):
