@@ -1,10 +1,10 @@
 import mysql.connector
 
 config = {
-  'host': 'rafadgvc.mysql.database.azure.com',
-    'user': 'rafadgvc',
-    'password': 'FitSuppFinder1',
-    'database': 'FitSuppFinder'
+    'host': 'proyectoisiv2-server.postgres.database.azure.com',
+    'user': 'uimpsotsiy',
+    'password': '8uoyerOVvg9$x2Ru',
+    'database': 'proyectoisiv2-database'
 }
 
 # Inicia la conexión
