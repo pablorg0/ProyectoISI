@@ -26,18 +26,18 @@ def create_table(cursor):
 def insert_product(cursor, product):
     insert_query = """
     INSERT INTO electronics (id, name, price, description, category, image, url)
-    VALUES (%s, %s, %s, %s, %s, %s, https://fakestoreapi.com/products/category/electronics)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
     ON DUPLICATE KEY UPDATE
         name = VALUES(name),
         price = VALUES(price),
         description = VALUES(description),
         category = VALUES(category),
         image = VALUES(image),
-        url = https://fakestoreapi.com/products/category/electronics
+        url = VALUES(url)
     """
     product_data = (
         product['id'],
-        product['name'],
+        product['tittle'],
         product['price'],
         product['description'],
         product['category'],
@@ -66,6 +66,7 @@ try:
         
         # Insertar cada producto en la tabla
         for product in electronics_products:
+            product['url'] = url
             insert_product(cursor, product)
         
         # Confirmar los cambios
