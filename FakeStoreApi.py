@@ -16,7 +16,8 @@ def create_table(cursor):
         price DECIMAL(10, 2),
         description TEXT,
         category VARCHAR(255),
-        image TEXT
+        image TEXT,
+        url VARCHAR(255)
     )
     """
     cursor.execute(create_table_query)
@@ -24,14 +25,15 @@ def create_table(cursor):
 # Función para insertar productos en la tabla
 def insert_product(cursor, product):
     insert_query = """
-    INSERT INTO electronics (id, name, price, description, category, image)
-    VALUES (%s, %s, %s, %s, %s, %s)
+    INSERT INTO electronics (id, name, price, description, category, image, url)
+    VALUES (%s, %s, %s, %s, %s, %s, https://fakestoreapi.com/products/category/electronics)
     ON DUPLICATE KEY UPDATE
         name = VALUES(name),
         price = VALUES(price),
         description = VALUES(description),
         category = VALUES(category),
-        image = VALUES(image)
+        image = VALUES(image),
+        url = https://fakestoreapi.com/products/category/electronics
     """
     product_data = (
         product['id'],
@@ -39,7 +41,8 @@ def insert_product(cursor, product):
         product['price'],
         product['description'],
         product['category'],
-        product['image']
+        product['image'],
+        product['url']
     )
     cursor.execute(insert_query, product_data)
 
