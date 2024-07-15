@@ -73,9 +73,10 @@ def consulta(products, query):
 @app.route('/')
 def hello_world():
     # Ejecutar scripts de scraping y generación de archivos
-    run_script('scrapperAliexpress.py')
+    
     
     return render_template('index.html')
+    run_script('scrapperAliexpress.py')
     run_script('scrapperWalmart.py')
     run_script('FakeStoreApi.py')
     run_script('generarArchivo.py')
