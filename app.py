@@ -49,7 +49,7 @@ def read_api(file_name):
             columns = line.strip().split('\\')
             product = {
                 'id': int(columns[0]),
-                'title': columns[1],
+                'name': columns[1],
                 'price': float(columns[2]),
                 'description': columns[3],
                 'category': columns[4],
