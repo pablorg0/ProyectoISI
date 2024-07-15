@@ -53,7 +53,8 @@ def read_api(file_name):
                 'price': float(columns[2]),
                 'description': columns[3],
                 'category': columns[4],
-                'image': columns[5]
+                'image': columns[5],
+                'url': columns[6]
             }
             products.append(product)
 
