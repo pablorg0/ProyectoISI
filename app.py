@@ -2,19 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-#d#ef run_script(script_name):
+def run_script(script_name):
     #"""Ejecuta un script de Python."""
-    #result = subprocess.run(['python3', script_name], capture_output=True, text=True)
-    #if result.returncode != 0:
-     #   print(f"Error ejecutando {script_name}: {result.stderr}")
-    #else:
-     #   print(f"{script_name} ejecutado con éxito")
-
-# Ejecutar scripts de scraping y generación de archivos
-#run_script('scrapperAliexpress.py')
-#run_script('scrapperWalmart.py')
-#run_script('FakeStoreApi.py')
-#run_script('generarArchivo.py')
+    result = subprocess.run(['python3', script_name], capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"Error ejecutando {script_name}: {result.stderr}")
+    else:
+        print(f"{script_name} ejecutado con éxito")
+        
 
 def sort_products(products):
     def sort_key(product):
@@ -77,6 +72,11 @@ def consulta(products, query):
 @app.route('/')
 def hello_world():
     return render_template('index.html')
+    # Ejecutar scripts de scraping y generación de archivos
+    run_script('scrapperAliexpress.py')
+    run_script('scrapperWalmart.py')
+    run_script('FakeStoreApi.py')
+    run_script('generarArchivo.py')
 
 @app.route('/results', methods=['POST'])
 def results():
