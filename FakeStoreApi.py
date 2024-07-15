@@ -12,7 +12,7 @@ def create_table(cursor):
     create_table_query = """
     CREATE TABLE IF NOT EXISTS electronics (
         id INT PRIMARY KEY,
-        title VARCHAR(255),
+        name VARCHAR(255),
         price DECIMAL(10, 2),
         description TEXT,
         category VARCHAR(255),
@@ -24,10 +24,10 @@ def create_table(cursor):
 # Función para insertar productos en la tabla
 def insert_product(cursor, product):
     insert_query = """
-    INSERT INTO electronics (id, title, price, description, category, image)
+    INSERT INTO electronics (id, name, price, description, category, image)
     VALUES (%s, %s, %s, %s, %s, %s)
     ON DUPLICATE KEY UPDATE
-        title = VALUES(title),
+        name = VALUES(name),
         price = VALUES(price),
         description = VALUES(description),
         category = VALUES(category),
@@ -35,7 +35,7 @@ def insert_product(cursor, product):
     """
     product_data = (
         product['id'],
-        product['title'],
+        product['name'],
         product['price'],
         product['description'],
         product['category'],
