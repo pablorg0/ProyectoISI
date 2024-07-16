@@ -26,8 +26,8 @@ queryAliexpress = "SELECT * FROM resistant_smartphones"
 cursor.execute(queryAliexpress)
 
 with open('productsAliexpress.txt', 'w') as f:
-    for (id, name, price, url, img_url) in cursor:
-        f.write(f'{id} \\ {name} \\ {price} \\ {url} \\ {img_url}\n')
+    for (id, product_id, name, price, url, img_url) in cursor:
+        f.write(f'{id} \\ {product_id} \\ {name} \\ {price} \\ {url} \\ {img_url}\n')
 
 #Para FakeStoreAPI
 queryAPI = "SELECT * FROM electronics" 
