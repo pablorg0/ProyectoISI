@@ -39,6 +39,25 @@ def read_file(file_name):
 
     return products
 
+def read_file_(file_name):
+    products = []
+    with open(file_name, 'r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+            columns = line.strip().split('\\')
+            product = {
+                'id': int(columns[0]),
+                'product_id': columns[1],
+                'name': columns[2],
+                'price': float(columns[3]),
+                'url': columns[4],
+                'img_url': columns[5]
+            }
+            products.append(product)
+
+    return products
+
 def read_api(file_name):
     products = []
     if not os.path.exists(file_name):
@@ -93,7 +112,7 @@ def results():
     return "Ingrese una consulta de búsqueda válida"
 
 def execute_query(query):
-    productsAliexpress = read_file('productsAliexpress.txt')
+    productsAliexpress = read_file_('productsAliexpress.txt')
     resultsAliexpress = consulta(productsAliexpress, query)
 
     productsWalmart = read_file('productsWalmart.txt')
