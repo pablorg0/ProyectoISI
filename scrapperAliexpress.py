@@ -43,7 +43,7 @@ try:
         for product in products:
             try:
                 product_id = product.get('data-asin')
-                title = product.h2.text.strip()
+                name = product.h2.text.strip()
                 link = 'https://www.amazon.de' + product.h2.a['href']
                 price = product.find('span', 'a-offscreen').text if product.find('span', 'a-offscreen') else "No price available"
                 img_url = product.find('img', 's-image')['src'] if product.find('img', 's-image') else "No image available"
@@ -52,7 +52,7 @@ try:
                 cursor.execute("""
                     INSERT INTO resistant_smartphones (product_id, name, price, url, img_url)
                     VALUES (%s, %s, %s, %s, %s)
-                """, (product_id, title, price, link, img_url))
+                """, (product_id, name, price, link, img_url))
             except Exception as e:
                 print(f"Error procesando producto: {e}")
 
