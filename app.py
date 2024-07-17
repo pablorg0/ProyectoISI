@@ -50,7 +50,7 @@ def read_file_(file_name):
                 'id': int(columns[0]),
                 'product_id': columns[1],
                 'name': columns[2],
-                'price': float(columns[3]),
+                'price': columns[3],
                 'url': columns[4],
                 'img_url': columns[5]
             }
