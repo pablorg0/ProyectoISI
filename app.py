@@ -31,7 +31,7 @@ def read_file(file_name):
             product = {
                 'id': int(columns[0]),
                 'name': columns[1],
-                'price': float(columns[2]),
+                'price': columns[2],
                 'url': columns[3],
                 'img_url': columns[4]
             }
