@@ -13,8 +13,8 @@ try:
     cursor.execute("""
         CREATE TABLE resistant_smartphones (
             id SERIAL PRIMARY KEY,
-            product_id VARCHAR(255) NOT NULL,
-            name VARCHAR(255) NOT NULL,
+            product_id VARCHAR(255),
+            name VARCHAR(255),
             price VARCHAR(255),
             url VARCHAR(255),
             img_url VARCHAR(255)
