@@ -13,7 +13,7 @@ try:
         create_table_query = """
         CREATE TABLE IF NOT EXISTS resistant_smartphones (
             id SERIAL PRIMARY KEY,
-            product_id VARCHAR(255),
+            product_id VARCHAR(255) UNIQUE,
             name VARCHAR(255),
             price VARCHAR(255),
             url VARCHAR(255),
@@ -21,6 +21,7 @@ try:
         )
         """
         cursor.execute(create_table_query)
+        print("Tabla 'resistant_smartphones' creada o ya existe.")
 
     # Función para insertar productos en la tabla
     def insert_product(cursor, product):
@@ -41,6 +42,7 @@ try:
             product['img_url']
         )
         cursor.execute(insert_query, product_data)
+        print(f"Producto {product['product_id']} insertado/actualizado.")
 
     # Crear la tabla si no existe
     create_table(cursor)
